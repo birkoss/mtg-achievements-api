@@ -23,6 +23,8 @@ class User(PermissionsMixin, UUIDModel, TimeStampedModel, AbstractBaseUser):
 
     name = models.CharField(max_length=100, default='')
 
+    date_validated = models.DateTimeField(null=True)
+
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
