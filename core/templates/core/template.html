@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<title>{% block page_title %}Gamebook{% endblock %}</title>
+		<link rel="icon" href="{% static 'core/favicon.ico' %}" />
+
+        <link href="{% static 'core/css/bootstrap.css' %}" rel="stylesheet" />
+        <link href="{% static 'core/css/app.css' %}" rel="stylesheet" async />
+	</head>
+
+	<body class="page{% if request.resolver_match.url_name %} {{ request.resolver_match.url_name }}{% endif %}{% if user.is_authenticated %} logged-in{% endif %}">
+		{% block navigation_wrapper %}
+			{% if navigation %}
+				<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+					<a class="navbar-brand" href="{% url 'home' %}">Stocks</a>
+
+					{% block sidebar_wrapper %}
+						{% if sidebar %}
+							<button class="btn btn-link btn-sm order-0 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+						{% endif %}
+					{% endblock %}
+
+					<!-- Navbar-->
+					<ul id="main-nav" class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="user-dropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit fa-fw"></i></a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
+								<a class="dropdown-item" href="">Profile</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+							</div>
+                        </li>
+						{% endif %}
+					</ul>
+				</nav>
+			{% endif %}
+		{% endblock %}
+
+		{% block base %}{% endblock %}
+
+		{% if user.is_authenticated %}
+			<script type="text/javascript">
+				var AJAX_CSRF_TOKEN = "{{ csrf_token }}";
+			</script>
+		{% endif %}
+
+        <script src="{% static 'core/js/jquery.js' %}"></script>
+        <script src="{% static 'core/js/jquery-ui.min.js' %}"></script>
+        <script src="{% static 'core/js/bootstrap.js' %}"></script>
+        <script src="{% static 'core/js/font-awesome.js' %}"></script>
+        <script src="{% static 'core/js/app.js' %}"></script>
+	</body>
+</html>

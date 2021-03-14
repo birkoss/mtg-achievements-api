@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container">
+
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">Histoires disponibles</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'share/add' %}" class="btn btn-primary btn-sm">Add</a>
+        {% endif %}
+	</div>
+
+	{% if stocks %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Shares</th>
+					<th scope="col">Bought Value</th>
+					<th scope="col">Current Value</th>
+					<th scope="col">Diff Value</th>
+					<th scope="col">Last Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stock in stocks %}
+				<tr>
+					<td>{{ stock.stock.name }}</td>
+					<td>{{ stock.total_shares }}</td>
+					<td>{{ stock.total_buy | floatformat:"2" }} $</td>
+					<td>{{ stock.total_value | floatformat:"2" }} $</td>
+					<td>{{ stock.diff_value | floatformat:"2" }} $</td>
+					<td>{{ stock.stock_value.value | floatformat:"2" }} $ <br />{{ stock.stock_value.date_added }}</td>
+					<td>
+						
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<div class="alert alert-warning" role="alert">
+			Il n'y a aucune histoire pour le moment.
+		</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}

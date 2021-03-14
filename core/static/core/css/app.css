@@ -1,0 +1,21 @@
+body {
+    height: 100vh;
+}
+
+body > div#content-fullscreen {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body > div#content-fullscreen > .login {
+    min-width: 500px;
+}
+
+@media screen and (max-width: 500px) {
+    body > div#content-fullscreen > .login {
+        min-width: 80%;
+    }
+}

@@ -1,0 +1,26 @@
+{% extends 'core/base_fullscreen.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="login">
+
+    <div class="jumbotron mb-0">
+        <h1 class="display-5 text-center">Login</h1>
+        <hr class="my-4">
+        <p>Login with those socials :</p>
+        <p class="lead">
+            <a href="{% url 'social:begin' 'google-oauth2' %}"
+                class="btn btn-primary btn-lg btn-google btn-block text-uppercase" type="submit"><i
+                    class="fab fa-google mr-2"></i> Google</a>
+
+            <a href="{% url 'social:begin' 'facebook' %}"
+                class="btn btn-primary btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
+                    class="fab fa-facebook-f mr-2"></i> Facebook</a>
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}
