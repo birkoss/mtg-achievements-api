@@ -21,9 +21,9 @@ class User(PermissionsMixin, UUIDModel, TimeStampedModel, AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100, default='', blank=True)
 
-    date_validated = models.DateTimeField(null=True)
+    date_validated = models.DateTimeField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
 
