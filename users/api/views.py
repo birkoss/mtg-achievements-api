@@ -15,12 +15,11 @@ from .serializers import UserSerializer
 class loginUser(APIView):
     def post(self, request, format=None):
 
-        print("LOGIN USER")
-
         user = authenticate(
             request,
             email=request.data['email'],
             password=request.data['password'])
+
         if user is None:
             return Response({
                 'error': 'invalid_data'
@@ -43,20 +42,20 @@ class registerUser(APIView):
         if serializer.is_valid():
             user = User.objects.create_user(
                 serializer.data['email'],
-                request.data['password'],
-                firstname=serializer.data['firstname'],
-                lastname=serializer.data['lastname'],
-                is_children=False
+                request.data['password']
             )
 
             token = Token.objects.get(user=user)
 
             return Response({
-                'status': status.HTTP_200_OK,
                 'token': token.key,
+                'userId': user.id,
             })
         else:
+            error_message = ""
+            for error_field in serializer.errors:
+                error_message = serializer.errors[error_field][0].code
+
             return Response({
-                "status": status.HTTP_404_NOT_FOUND,
-                'message': serializer.errors,
+                'error': error_message,
             }, status=status.HTTP_404_NOT_FOUND)
