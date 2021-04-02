@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import Achievement, Playgroup, PlaygroupAchievement, PlaygroupPlayer, PlayerAchievement, PlayerRole
+from .models import (
+    Achievement, Playgroup, PlaygroupAchievement,
+    PlaygroupPlayer, PlayerAchievement, PlayerRole
+)
 
 
 admin.site.register(Achievement)
