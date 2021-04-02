@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from rest_framework.authtoken.models import Token
 
@@ -48,6 +49,7 @@ class User(PermissionsMixin, UUIDModel, TimeStampedModel, AbstractBaseUser):
             player=self,
             player_role=player_role,
             playgroup=playgroup,
+            date_validated=timezone.now(),
         )
         playgroup_player.save()
 

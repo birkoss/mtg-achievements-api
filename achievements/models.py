@@ -42,6 +42,7 @@ class PlaygroupPlayer(TimeStampedModel, UUIDModel, models.Model):
     playgroup = ForeignKey(Playgroup, on_delete=models.CASCADE)
     player = ForeignKey("users.User", on_delete=models.CASCADE)
     player_role = ForeignKey(PlayerRole, on_delete=models.CASCADE)
+    date_validated = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return (

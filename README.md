@@ -40,3 +40,23 @@ error - string
     - blank : Missing username or password
     - unique : Email already exists
 
+## GET /v1/playgroup/PLAYGROUP_ID/players
+
+Return :
+
+Status : 200 - OK
+playgroupId - string
+players - List of player (email and role)
+
+## POST /v1/playgroup/PLAYGROUP_ID/players
+
+Params :
+
+email - string
+role - string
+
+Return :
+
+Status : 200 - OK
+playgroupId - string
+players - List of player (email and role)
