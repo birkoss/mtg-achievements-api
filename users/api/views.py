@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from achievements.models import Playgroup
+from achievements.models import Playgroup, PlayerRole
 
 from ..models import User
 
@@ -31,9 +31,15 @@ class loginUser(APIView):
 
         token = Token.objects.get(user=user)
 
+        playgroup = Playgroup.objects.filter(
+            playgroupplayer__player=user,
+            playgroupplayer__player_role__name='admin'
+        ).first()
+
         return Response({
             'token': token.key,
             'userId': user.id,
+            'playgroupId': playgroup.id,
         }, status=status.HTTP_200_OK)
 
 
@@ -50,14 +56,11 @@ class registerUser(APIView):
 
             token = Token.objects.get(user=user)
 
-            # Create a default playgroup for this player
-            playground = Playgroup(
-                name=user.email + "'s playgroup",
-                author=user,
-            )
+            playgroup = user.createDefaultPlaygroup()
 
             return Response({
                 'token': token.key,
+                'playgroupId': playgroup.id,
                 'userId': user.id,
             })
         else:

@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 from core.models import TimeStampedModel, UUIDModel
+from achievements.models import PlayerRole, Playgroup, PlaygroupPlayer
 
 from .managers import UserManager
 
@@ -31,6 +32,26 @@ class User(PermissionsMixin, UUIDModel, TimeStampedModel, AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+    def createDefaultPlaygroup(self):
+        # Get the ADMIN player role
+        player_role = PlayerRole.objects.filter(name='admin').first()
+
+        # Create a default playgroup for this player
+        playgroup = Playgroup(
+            name=self.email + "'s playgroup",
+            author=self,
+        )
+        playgroup.save()
+
+        playgroup_player = PlaygroupPlayer(
+            player=self,
+            player_role=player_role,
+            playgroup=playgroup,
+        )
+        playgroup_player.save()
+
+        return playgroup
 
 
 # Create an API token when an user is created

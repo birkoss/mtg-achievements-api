@@ -1,3 +1,7 @@
+# Install
+
+## Must load initial data (data/player_role.json) *BEFORE* creating an admin
+
 # Endpoints
 
 ## POST /v1/login
