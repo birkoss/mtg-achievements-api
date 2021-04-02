@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 
 from django.contrib.auth import login, authenticate
 
@@ -42,7 +42,8 @@ class registerUser(APIView):
         if serializer.is_valid():
             user = User.objects.create_user(
                 serializer.data['email'],
-                request.data['password']
+                request.data['password'],
+                date_validated=timezone.now(),
             )
 
             token = Token.objects.get(user=user)
