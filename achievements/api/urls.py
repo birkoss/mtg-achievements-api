@@ -9,4 +9,9 @@ urlpatterns = [
         api_views.playgroup_players.as_view(),
         name='playgroup_players'
     ),
+    path(
+        'v1/playgroup/<str:playgroup_id>/player/<str:player_id>',
+        api_views.playgroup_player.as_view(),
+        name='playgroup_player'
+    ),
 ]

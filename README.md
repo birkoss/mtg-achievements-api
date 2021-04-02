@@ -60,3 +60,11 @@ Return :
 Status : 200 - OK
 playgroupId - string
 players - List of player (email and role)
+
+Status : 400
+error - string
+    - invalid_playgroup : Playgroup not valid of you don't have the permission to access it
+    - missing_email_role : Params are missing in the query
+    - invalid_email : email is not a valid email
+    - invalid_role : role is not a valid existing role
+    - already_in_playgroup : This user is already in this playgroup

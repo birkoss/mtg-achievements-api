@@ -7,7 +7,7 @@ from users.models import User
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['id', 'email']
 
 
 class PlayerRoleSerializer(serializers.ModelSerializer):
