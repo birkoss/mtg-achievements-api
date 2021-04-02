@@ -1,0 +1,14 @@
+[
+    {
+      "model": "achievements.playerrole",
+      "fields": {
+          "name": "admin"
+      }
+    },
+    {
+      "model": "achievements.playerrole",
+      "fields": {
+          "name": "player"
+      }
+    }
+]

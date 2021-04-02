@@ -7,6 +7,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from achievements.models import Playgroup
+
 from ..models import User
 
 from .serializers import UserSerializer
@@ -47,6 +49,12 @@ class registerUser(APIView):
             )
 
             token = Token.objects.get(user=user)
+
+            # Create a default playgroup for this player
+            playground = Playgroup(
+                name=user.email + "'s playgroup",
+                author=user,
+            )
 
             return Response({
                 'token': token.key,

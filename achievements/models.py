@@ -30,6 +30,9 @@ class PlaygroupAchievement(TimeStampedModel, UUIDModel, models.Model):
 class PlayerRole(UUIDModel, models.Model):
     name = models.CharField(max_length=150, default="")
 
+    def __str__(self):
+        return self.name
+
 
 class PlaygroupPlayer(TimeStampedModel, UUIDModel, models.Model):
     playgroup = ForeignKey(Playgroup, on_delete=models.CASCADE)
