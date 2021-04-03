@@ -5,10 +5,12 @@ from rest_framework import status, authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Playgroup, PlayerRole, PlaygroupPlayer
+from ..models import (
+    Achievement, Playgroup, PlayerRole, PlaygroupAchievement, PlaygroupPlayer
+)
 from users.models import User
 
-from .serializers import PlaygroupPlayerSerializer
+from .serializers import AchievementSerializer, PlaygroupPlayerSerializer
 
 
 class playgroups(APIView):
@@ -32,6 +34,44 @@ class playgroups(APIView):
         return Response({
             'playgroups': playgroups,
         }, status=status.HTTP_200_OK)
+
+
+class playgroup_achievements(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    # Add a new User (or an existing User) in the current playgroup
+    def post(self, request, playgroup_id, format=None):
+        playgroup = fetch_playgroup(
+            id=playgroup_id,
+            playgroupplayer__player=request.user,
+            playgroupplayer__player_role__name='admin',
+        )
+        if playgroup is None:
+            return create_error_response('invalid_playgroup')
+
+        serializer = AchievementSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            achievement = serializer.save(author=request.user)
+
+            # Add the achievement to the playgroup
+            playgroup_achievement = PlaygroupAchievement(
+                playgroup=playgroup,
+                achievement=achievement,
+                points=achievement.points,
+                author=request.user,
+            )
+
+            playgroup_achievement.save()
+
+            return Response({
+                'achievementId': playgroup_achievement.id,
+                'status': status.HTTP_200_OK,
+            })
+        else:
+            print(serializer.error_messages)
+            return create_error_response(serializer.error_messages)
 
 
 class playgroup_players(APIView):

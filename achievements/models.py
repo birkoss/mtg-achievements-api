@@ -6,7 +6,7 @@ from core.models import TimeStampedModel, UUIDModel
 
 class Achievement(TimeStampedModel, UUIDModel, models.Model):
     name = models.CharField(max_length=150, default="")
-    description = models.TextField(blank=True, default="")
+    description = models.TextField(blank=True, null=True, default="")
     points = models.IntegerField(blank=True, default=0)
     author = ForeignKey(
         "users.User", blank=True, null=True, on_delete=models.CASCADE

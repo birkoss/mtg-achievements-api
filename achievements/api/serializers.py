@@ -1,7 +1,13 @@
 from rest_framework import serializers
 
-from ..models import Playgroup, PlaygroupPlayer, PlayerRole
+from ..models import Achievement, Playgroup, PlaygroupPlayer, PlayerRole
 from users.models import User
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Achievement
+        fields = ['name', 'points', 'description']
 
 
 class PlayerSerializer(serializers.ModelSerializer):

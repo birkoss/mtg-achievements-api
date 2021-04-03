@@ -10,6 +10,11 @@ urlpatterns = [
         name='playgroups'
     ),
     path(
+        'v1/playgroup/<str:playgroup_id>/achievements',
+        api_views.playgroup_achievements.as_view(),
+        name='playgroup_achievements'
+    ),
+    path(
         'v1/playgroup/<str:playgroup_id>/players',
         api_views.playgroup_players.as_view(),
         name='playgroup_players'
