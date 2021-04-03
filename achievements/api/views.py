@@ -40,6 +40,32 @@ class playgroup_achievements(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, playgroup_id, format=None):
+        playgroup = fetch_playgroup(
+            id=playgroup_id,
+            playgroupplayer__player=request.user,
+        )
+        if playgroup is None:
+            return create_error_response('invalid_playgroup')
+
+        achievements_qs = PlaygroupAchievement.objects.filter(
+            playgroup=playgroup
+        )
+
+        achievements = []
+        for achievement in achievements_qs:
+            achievements.append({
+                'id': achievement.id,
+                'name': achievement.achievement.name,
+                'description': achievement.achievement.description,
+                'points': achievement.points,
+            })
+
+        return Response({
+            'playgroupId': playgroup.id,
+            'achievements': achievements,
+        }, status=status.HTTP_200_OK)
+
     # Add a new User (or an existing User) in the current playgroup
     def post(self, request, playgroup_id, format=None):
         playgroup = fetch_playgroup(
