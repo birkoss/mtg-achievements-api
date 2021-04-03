@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import PlaygroupPlayer, PlayerRole
+from ..models import Playgroup, PlaygroupPlayer, PlayerRole
 from users.models import User
 
 

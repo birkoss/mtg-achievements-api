@@ -11,6 +11,29 @@ from users.models import User
 from .serializers import PlaygroupPlayerSerializer
 
 
+class playgroups(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
+        playgroups_qs = PlaygroupPlayer.objects.filter(
+            player=request.user
+        )
+
+        playgroups = []
+
+        for playgroup in playgroups_qs:
+            playgroups.append({
+                'id': playgroup.playgroup.id,
+                'name': playgroup.playgroup.name,
+                'role': playgroup.player_role.name,
+            })
+
+        return Response({
+            'playgroups': playgroups,
+        }, status=status.HTTP_200_OK)
+
+
 class playgroup_players(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
